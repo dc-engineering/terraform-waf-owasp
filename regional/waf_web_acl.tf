@@ -76,14 +76,17 @@ resource "aws_wafregional_web_acl" "wafregional_acl" {
     type     = "REGULAR"
   }
 
-  rule {
-    action {
-      type = "BLOCK"
-    }
+  for_each = var.enforce_csrf ? [true] : []
+  content {
+    rule {
+      action {
+        type = "BLOCK"
+      }
 
-    priority = 8
-    rule_id  = aws_wafregional_rule.enforce_csrf.id
-    type     = "REGULAR"
+      priority = 8
+      rule_id  = aws_wafregional_rule.enforce_csrf.id
+      type     = "REGULAR"
+    }
   }
 
   rule {
@@ -106,4 +109,3 @@ resource "aws_wafregional_web_acl" "wafregional_acl" {
     type     = "REGULAR"
   }
 }
-

@@ -7,3 +7,7 @@ variable "blacklisted_ips" {
 variable "admin_remote_ipset" {
   type = "list"
 }
+
+variable "enforce_csrf" {
+  default = true
+}
