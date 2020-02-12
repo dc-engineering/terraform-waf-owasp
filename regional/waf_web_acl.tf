@@ -76,17 +76,14 @@ resource "aws_wafregional_web_acl" "wafregional_acl" {
     type     = "REGULAR"
   }
 
-  dynamic "rule" {
-    for_each = var.enforce_csrf ? [8] : []
-    content {
-      action {
-        type = "BLOCK"
-      }
-
-      priority = rule.value
-      rule_id  = aws_wafregional_rule.enforce_csrf.id
-      type     = "REGULAR"
+  rule {
+    action {
+      type = "BLOCK"
     }
+
+    priority = 8
+    rule_id  = aws_wafregional_rate_based_rule.rate_limit.id
+    type     = "RATE_BASED"
   }
 
   rule {

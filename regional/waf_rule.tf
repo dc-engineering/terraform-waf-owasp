@@ -1,3 +1,11 @@
+resource "aws_wafregional_rate_based_rule" "rate_limit" {
+  name        = "${var.waf_prefix}-generic-rate-limit"
+  metric_name = "${var.waf_prefix}genericratelimit"
+
+  rate_key   = "IP"
+  rate_limit = 3000
+}
+
 resource "aws_wafregional_rule" "detect_admin_access" {
   name        = "${var.waf_prefix}-generic-detect-admin-access"
   metric_name = "${var.waf_prefix}genericdetectadminaccess"
@@ -125,4 +133,3 @@ resource "aws_wafregional_rule" "restrict_sizes" {
     type    = "SizeConstraint"
   }
 }
-
